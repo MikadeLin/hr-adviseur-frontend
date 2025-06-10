@@ -1,0 +1,2 @@
+2025-06-10 16:19:30,604 - ERROR - Excel bestand 'esz images.xlsx' niet gevonden!
+2025-06-10 16:19:30,605 - INFO - Zorg ervoor dat het bestand in dezelfde map staat als dit script.

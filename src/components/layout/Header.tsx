@@ -1,8 +1,9 @@
 // src/components/layout/Header.tsx
 import Link from "next/link";
 import { fetchApi } from "@/lib/strapi";
+import NavDropdown from "./NavDropdown"; // Importeer het nieuwe component
 
-// Definieer de types voor de data die je verwacht
+// Definieer de types, let op de 'attributes' nesting
 interface Service {
   id: number;
   attributes: {
@@ -13,24 +14,22 @@ interface Service {
 
 interface GlobalData {
   data: {
-    attributes: {
-      siteName: string;
-    };
+    siteName: string;
   };
 }
 
 interface ServicesData {
-    data: Service[];
+  data: Service[];
 }
 
 export async function Header() {
-  // Haal de globale site data en de services parallel op
+  // Data ophalen blijft hetzelfde
   const [globalData, servicesData] = await Promise.all([
     fetchApi<GlobalData>("/global"),
-    fetchApi<ServicesData>("/services")
+    fetchApi<ServicesData>("/services"),
   ]);
 
-  const { siteName } = globalData.data.attributes;
+  const { siteName } = globalData.data;
   const services = servicesData.data;
 
   return (
@@ -39,15 +38,19 @@ export async function Header() {
         <Link href="/" className="text-xl font-bold">
           {siteName}
         </Link>
-        <ul className="flex space-x-4">
-          {services.map((service) => (
-            <li key={service.id}>
-              <Link href={`/diensten/${service.attributes.Slug}`} className="hover:text-blue-500">
-                {service.attributes.Name}
-              </Link>
-            </li>
-          ))}
-          {/* Voeg hier andere links toe zoals 'Over Ons' of 'Contact' */}
+        {/* Pas de navigatielijst aan */}
+        <ul className="flex items-center space-x-6">
+          {/* Plaats hier de nieuwe dropdown component */}
+          <li>
+            <NavDropdown services={services} />
+          </li>
+          {/* Voeg hier andere statische links toe */}
+          <li>
+            <Link href="/over-ons" className="hover:text-blue-500">Over ons</Link>
+          </li>
+          <li>
+            <Link href="/contact" className="hover:text-blue-500">Contact</Link>
+          </li>
         </ul>
       </nav>
     </header>
