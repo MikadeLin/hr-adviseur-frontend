@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header"; // Importeren
+import { Footer } from "@/components/homepage/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header /> {/* Header hier toevoegen */}
         <main>{children}</main>
-        {/* Voeg hier later een Footer component toe */}
+        <Footer /> 
       </body>
     </html>
   );
