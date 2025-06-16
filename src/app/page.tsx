@@ -1,5 +1,5 @@
 import { fetchApi } from "@/lib/strapi";
-import { Hero } from "@/components/homepage/Hero";
+import Hero  from "@/components/homepage/Hero";
 import { Introduction } from "@/components/homepage/Introduction";
 import { UspSection } from "@/components/homepage/UspSection";
 import { ServicesOverview } from "@/components/homepage/ServicesOverview";

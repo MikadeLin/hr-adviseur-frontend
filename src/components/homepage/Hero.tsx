@@ -1,116 +1,120 @@
-import Link from 'next/link';
+import React from 'react';
 
 interface HeroProps {
-  title: string;
-  subtitle: string;
-  ctaText: string;
-  ctaLink: string;
+  title?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaLink?: string;
 }
 
-export function Hero({ title, subtitle, ctaText, ctaLink }: HeroProps) {
+export default function Hero({ 
+  title = "Jouw HR Partner voor Groei & Succes", 
+  subtitle = "Professioneel HR-advies op maat voor MKB-ondernemingen. Wij helpen jouw bedrijf groeien met de juiste mensen en processen.",
+  ctaText = "Start Nu",
+  ctaLink = "/contact" 
+}: HeroProps) {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-      {/* Animated Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.2'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
-      </div>
-
-      {/* Floating Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-16 h-16 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center animate-bounce">
-          <div className="text-2xl">🤖</div>
-        </div>
-        <div className="absolute top-1/3 right-1/4 w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center animate-pulse">
-          <div className="text-3xl">⚡</div>
-        </div>
-        <div className="absolute bottom-1/3 left-1/6 w-18 h-18 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center animate-ping">
-          <div className="text-2xl">👥</div>
-        </div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center text-white">
-        {/* Badge */}
-        <div className="inline-flex items-center px-6 py-3 mb-8 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
-          <span className="text-sm font-semibold tracking-wide text-blue-200">
-            🚀 AI + Ervaring = Snelle HR Oplossingen
-          </span>
-        </div>
-
-        {/* Main Heading */}
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-          <span className="block">Jouw HR Partner voor</span>
-          <span className="block bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent">
-            Groei & Succes
-          </span>
-        </h1>
-
-        {/* Subtitle */}
-        <p className="text-xl md:text-2xl mb-8 max-w-4xl mx-auto leading-relaxed opacity-90">
-          {subtitle}
-        </p>
-
-        {/* Value Proposition Pills */}
-        <div className="flex flex-wrap justify-center gap-4 mb-10">
-          <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-blue-100">
-            ✅ Binnen 24u contact
-          </div>
-          <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-blue-100">
-            ✅ Data-gedreven advies
-          </div>
-          <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-blue-100">
-            ✅ Ervaren HR-experts
-          </div>
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Link 
-            href={ctaLink}
-            className="group bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 hover:shadow-2xl hover:shadow-orange-500/30 hover:-translate-y-1 flex items-center"
-          >
-            {ctaText}
-            <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-            </svg>
-          </Link>
+    <section className="bg-gray-50 py-16 lg:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
-          <Link 
-            href="/diensten"
-            className="px-8 py-4 border-2 border-white/30 text-white rounded-full text-lg font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm"
-          >
-            Bekijk Onze Diensten
-          </Link>
-        </div>
+          {/* Left Column - Content */}
+          <div className="space-y-8">
+            {/* Badge */}
+            <div className="inline-flex items-center bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">
+              👑 #1 HR Partner • Bewezen Resultaten
+            </div>
 
-        {/* Trust Indicators */}
-        <div className="mt-16 pt-8 border-t border-white/20">
-          <p className="text-sm opacity-75 mb-4 text-blue-200">Direct hulp voor acute HR-uitdagingen:</p>
-          <div className="flex flex-wrap justify-center gap-8 text-sm font-medium text-blue-100">
-            <div className="flex items-center">
-              <div className="w-2 h-2 bg-orange-400 rounded-full mr-2"></div>
-              Snelle Werving
+            {/* Main Heading */}
+            <div className="space-y-4">
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
+                Jouw HR Partner voor
+              </h1>
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
+                <span className="text-blue-600">Groei</span>{' '}
+                <span className="text-gray-400">&</span>{' '}
+                <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  Succes
+                </span>
+              </h1>
             </div>
-            <div className="flex items-center">
-              <div className="w-2 h-2 bg-orange-400 rounded-full mr-2"></div>
-              Acute Personeelsadvies
+
+            {/* Subtitle */}
+            <p className="text-lg lg:text-xl text-gray-600 leading-relaxed max-w-xl">
+              {subtitle}
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors duration-200 flex items-center justify-center group">
+                {ctaText}
+                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+              </button>
+              
+              <button className="bg-white border-2 border-gray-200 hover:border-gray-300 text-gray-700 px-8 py-4 rounded-lg text-lg font-semibold transition-colors duration-200">
+                Bekijk Ons Diensten
+              </button>
             </div>
-            <div className="flex items-center">
-              <div className="w-2 h-2 bg-orange-400 rounded-full mr-2"></div>
-              HR Documentatie
-            </div>
-            <div className="flex items-center">
-              <div className="w-2 h-2 bg-orange-400 rounded-full mr-2"></div>
-              Tijdelijke Capaciteit
+
+            {/* Trust Indicators */}
+            <div className="flex items-center space-x-8 pt-4">
+              <div className="flex items-center text-sm text-gray-600">
+                <svg className="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                Direct Bereikbaar
+              </div>
+              
+              <div className="flex items-center text-sm text-gray-600">
+                <svg className="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                </svg>
+                24u Response
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* NIEUWE: Zachte overgang naar volgende sectie */}
-      <div className="absolute bottom-0 left-0 w-full h-32">
-        <div className="w-full h-full bg-gradient-to-b from-transparent via-slate-800/50 to-slate-700"></div>
+          {/* Right Column - HR Check Card */}
+          <div className="lg:justify-self-end">
+            <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
+              {/* Header */}
+              <div className="flex justify-between items-start mb-6">
+                <h3 className="text-xl font-bold text-gray-900">
+                  Gratis HR Check
+                </h3>
+                <div className="text-2xl font-bold text-orange-500">
+                  €0
+                </div>
+              </div>
+
+              {/* Features List */}
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                  <span className="text-gray-700">Volledige HR-analyse</span>
+                </div>
+                
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                  <span className="text-gray-700">Persoonlijk adviesrapport</span>
+                </div>
+                
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                  <span className="text-gray-700">Actieplan voor groei</span>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 px-6 rounded-lg font-semibold text-lg transition-colors duration-200">
+                Claim Je Gratis Check
+              </button>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   );

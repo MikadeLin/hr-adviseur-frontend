@@ -40,7 +40,6 @@ export async function fetchApi<T>(
     return data as T;
 
   } catch (error) {
-    // --- DEZE FIX IS NIEUW ---
     // Controleer of de 'error' een standaard Error object is
     if (error instanceof Error) {
       // Als dat zo is, mogen we error.message veilig gebruiken
