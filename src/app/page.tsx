@@ -6,7 +6,7 @@ import { ServicesOverview } from "@/components/homepage/ServicesOverview";
 import { CtaSection } from "@/components/homepage/CtaSection";
 import type { Metadata } from 'next';
 
-// --- TYPE DEFINITIES (blijven grotendeels hetzelfde) ---
+// --- TYPE DEFINITIES ---
 interface Usp {
   id: number;
   Title: string;
@@ -34,14 +34,17 @@ interface HomepageData {
   SeoDescription: string;
 }
 
+// Updated Service interface - no attributes wrapper
 interface Service {
   id: number;
-  attributes: {
-    Name: string;
-    Slug: string;
-    ShortDescription: string;
-    Icon: any;
-  };
+  documentId: string;
+  Name: string;
+  Slug: string;
+  ShortDescription: string;
+  Icon?: any;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
 
 // Definiëer het populate-object één keer voor hergebruik
@@ -116,4 +119,4 @@ export default async function HomePage() {
       />
     </main>
   );
-} 
+}

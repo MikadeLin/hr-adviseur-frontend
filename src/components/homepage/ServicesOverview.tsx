@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchApi } from '@/lib/strapi';
 import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer';
 
 // Definitie voor de structuur van een media-object in Strapi
 interface StrapiMedia {
   data: {
-    id: number;
     attributes: {
       url: string;
       alternativeText: string | null;
@@ -14,22 +12,25 @@ interface StrapiMedia {
   };
 }
 
-// Uitgebreide interface voor een service, inclusief het icoon
+// Uitgebreide interface voor een service (zonder attributes wrapper)
 interface Service {
   id: number;
-  attributes: {
-    Name: string;
-    Slug: string;
-    ShortDescription: string;
-    Icon: StrapiMedia;
-    LongDescription?: BlocksContent; // Optioneel voor nu
-  };
+  documentId: string;
+  Name: string;
+  Slug: string;
+  ShortDescription: string;
+  Icon?: StrapiMedia;
+  LongDescription?: BlocksContent;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
 
 // Interface voor de props van het component
 interface ServicesOverviewProps {
   title: string;
   introText: string;
+  services: Service[]; // Accept services as a prop
 }
 
 // Een standaard fallback-icoon
@@ -39,13 +40,7 @@ const DefaultIcon = () => (
   </svg>
 );
 
-export async function ServicesOverview({ title, introText }: ServicesOverviewProps) {
-  // Data ophalen voor de services, eerst alleen Icon
-  const servicesData = await fetchApi<{ data: Service[] }>('/services', { 
-    populate: 'Icon'
-  });
-  const services = servicesData.data;
-
+export function ServicesOverview({ title, introText, services }: ServicesOverviewProps) {
   return (
     <section className="bg-white py-16 lg:py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -69,65 +64,71 @@ export async function ServicesOverview({ title, introText }: ServicesOverviewPro
 
         {/* Services Grid */}
         <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-16">
-          {services.map((service) => {
-            const iconUrl = service.Icon?.data?.url;
-            return (
-              <div 
-                key={service.id} 
-                className="bg-white rounded-2xl p-8 border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300 group flex flex-col"
-              >
-                <div className="flex-grow">
-                  {/* Dynamisch Service Icoon */}
-                  <div className="mb-6">
-                    <div className="w-16 h-16 bg-gray-50 rounded-xl flex items-center justify-center group-hover:bg-gray-100 transition-colors duration-300">
-                    {iconUrl ? (
-                      <Image
-                        src={iconUrl}
-                        alt={service.Icon.data.alternativeText || `Icoon voor ${service.Name}`}
-                        width={32}
-                        height={32}
-                        className="w-8 h-8"
-                      />
-                    ) : (
-                      <DefaultIcon />
-                    )}
+          {services && services.length > 0 ? (
+            services.map((service) => {
+              const iconUrl = service.Icon?.data?.attributes?.url;
+              return (
+                <div 
+                  key={service.id} 
+                  className="bg-white rounded-2xl p-8 border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300 group flex flex-col"
+                >
+                  <div className="flex-grow">
+                    {/* Dynamisch Service Icoon */}
+                    <div className="mb-6">
+                      <div className="w-16 h-16 bg-gray-50 rounded-xl flex items-center justify-center group-hover:bg-gray-100 transition-colors duration-300">
+                      {iconUrl ? (
+                        <Image
+                          src={iconUrl}
+                          alt={service.Icon?.data?.attributes?.alternativeText || `Icoon voor ${service.Name}`}
+                          width={32}
+                          height={32}
+                          className="w-8 h-8"
+                        />
+                      ) : (
+                        <DefaultIcon />
+                      )}
+                      </div>
+                    </div>
+
+                    {/* Service Content */}
+                    <div className="space-y-4 mb-6">
+                      <h3 className="text-xl lg:text-2xl font-bold text-gray-900 leading-tight">
+                        {service.Name}
+                      </h3>
+                      
+                      <p className="text-gray-600 leading-relaxed">
+                        {service.ShortDescription}
+                      </p>
+
+                      {/* Rich Text (LongDescription) renderen */}
+                      {service.LongDescription && (
+                        <div className="text-sm text-gray-600 prose prose-sm max-w-none prose-li:my-1 prose-ul:pl-2">
+                           <BlocksRenderer content={service.LongDescription} />
+                        </div>
+                      )}
                     </div>
                   </div>
 
-                  {/* Service Content */}
-                  <div className="space-y-4 mb-6">
-                    <h3 className="text-xl lg:text-2xl font-bold text-gray-900 leading-tight">
-                      {service.Name}
-                    </h3>
-                    
-                    <p className="text-gray-600 leading-relaxed">
-                      {service.ShortDescription}
-                    </p>
-
-                    {/* Rich Text (LongDescription) renderen */}
-                    {service.LongDescription && (
-                      <div className="text-sm text-gray-600 prose prose-sm max-w-none prose-li:my-1 prose-ul:pl-2">
-                         <BlocksRenderer content={service.LongDescription} />
-                      </div>
-                    )}
+                  {/* Call to Action */}
+                  <div className="mt-auto pt-4">
+                    <Link 
+                      href={`/diensten/${service.Slug}`}
+                      className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 group"
+                    >
+                      <span>Meer Informatie</span>
+                      <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                      </svg>
+                    </Link>
                   </div>
                 </div>
-
-                {/* Call to Action */}
-                <div className="mt-auto pt-4">
-                  <Link 
-                    href={`/diensten/${service.Slug}`}
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 group"
-                  >
-                    <span>Meer Informatie</span>
-                    <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-500 text-lg">Geen diensten beschikbaar.</p>
+            </div>
+          )}
         </div>
 
         {/* Bottom CTA Section */}

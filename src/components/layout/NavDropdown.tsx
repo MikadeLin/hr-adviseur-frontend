@@ -4,12 +4,16 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 
+// Updated Service type - no attributes wrapper
 type Service = {
   id: number;
-  attributes: {
-    Name: string;
-    Slug: string;
-  };
+  documentId: string;
+  Name: string;
+  Slug: string;
+  ShortDescription: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 };
 
 type NavDropdownProps = {
@@ -63,25 +67,31 @@ export default function NavDropdown({ services }: NavDropdownProps) {
           
           {/* Service links */}
           <ul className="space-y-1">
-            {services.map((service) => (
-              <li key={service.id}>
-                <Link
-                  href={`/diensten/${service.Slug}`}
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                >
-                  {/* Icon voor elke dienst */}
-                  <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center mr-3 flex-shrink-0">
-                    <div className="w-3 h-3 bg-white rounded-sm"></div>
-                  </div>
-                  
-                  {/* Service naam */}
-                  <span className="text-sm font-medium">
-                    {service.Name}
-                  </span>
-                </Link>
+            {services && services.length > 0 ? (
+              services.map((service) => (
+                <li key={service.id}>
+                  <Link
+                    href={`/diensten/${service.Slug}`}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    {/* Icon voor elke dienst */}
+                    <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center mr-3 flex-shrink-0">
+                      <div className="w-3 h-3 bg-white rounded-sm"></div>
+                    </div>
+                    
+                    {/* Service naam */}
+                    <span className="text-sm font-medium">
+                      {service.Name}
+                    </span>
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li className="px-4 py-2 text-gray-500 text-sm">
+                Geen diensten beschikbaar
               </li>
-            ))}
+            )}
           </ul>
           
           {/* Call-to-action in dropdown */}

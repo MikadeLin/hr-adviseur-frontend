@@ -3,13 +3,16 @@ import Link from "next/link";
 import { fetchApi } from "@/lib/strapi";
 import NavDropdown from "./NavDropdown";
 
-// Definieer de types, let op de 'attributes' nesting
+// Updated Service interface - no attributes wrapper (matching your actual API)
 interface Service {
   id: number;
-  attributes: {
-    Name: string;
-    Slug: string;
-  };
+  documentId: string;
+  Name: string;
+  Slug: string;
+  ShortDescription: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
 
 interface GlobalData {

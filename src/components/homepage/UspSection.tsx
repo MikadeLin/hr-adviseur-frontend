@@ -1,6 +1,22 @@
 import React from 'react';
 
-export function UspSection() {
+// Definieer de types voor de props
+interface Usp {
+  id: number;
+  Title: string;
+  Description: string;
+  Icon: any;
+}
+
+interface UspSectionProps {
+  title?: string;
+  usps?: Usp[];
+}
+
+export function UspSection({ title, usps }: UspSectionProps) {
+  // Gebruik de doorgegeven titel of een fallback
+  const sectionTitle = title || "Waarom Kiezen MKB-Ondernemers Voor Ons?";
+  
   return (
     <section className="bg-white py-16 lg:py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -8,7 +24,7 @@ export function UspSection() {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-6">
-            Waarom Kiezen MKB-Ondernemers Voor Ons?
+            {sectionTitle}
           </h2>
           <p className="text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
             Sinds HR-specialist brengen wij bewezen expertise en persoonlijke aandacht die jouw bedrijf naar het volgende niveau tilt.
@@ -51,47 +67,64 @@ export function UspSection() {
           </div>
         </div>
 
-        {/* Features */}
+        {/* Dynamic USPs from Strapi or fallback features */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {/* Feature 1 */}
-          <div className="flex items-center justify-center lg:justify-start">
-            <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <span className="text-gray-700 font-medium">Persoonlijke Aanpak</span>
-          </div>
+          {usps && usps.length > 0 ? (
+            // Render USPs from Strapi
+            usps.map((usp) => (
+              <div key={usp.id} className="flex items-center justify-center lg:justify-start">
+                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-gray-700 font-medium">{usp.Title}</span>
+              </div>
+            ))
+          ) : (
+            // Fallback static features
+            <>
+              {/* Feature 1 */}
+              <div className="flex items-center justify-center lg:justify-start">
+                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-gray-700 font-medium">Persoonlijke Aanpak</span>
+              </div>
 
-          {/* Feature 2 */}
-          <div className="flex items-center justify-center lg:justify-start">
-            <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <span className="text-gray-700 font-medium">Bewezen Methodiek</span>
-          </div>
+              {/* Feature 2 */}
+              <div className="flex items-center justify-center lg:justify-start">
+                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-gray-700 font-medium">Bewezen Methodiek</span>
+              </div>
 
-          {/* Feature 3 */}
-          <div className="flex items-center justify-center lg:justify-start">
-            <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <span className="text-gray-700 font-medium">Snelle Implementatie</span>
-          </div>
+              {/* Feature 3 */}
+              <div className="flex items-center justify-center lg:justify-start">
+                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-gray-700 font-medium">Snelle Implementatie</span>
+              </div>
 
-          {/* Feature 4 */}
-          <div className="flex items-center justify-center lg:justify-start">
-            <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <span className="text-gray-700 font-medium">Continue Ondersteuning</span>
-          </div>
+              {/* Feature 4 */}
+              <div className="flex items-center justify-center lg:justify-start">
+                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <span className="text-gray-700 font-medium">Continue Ondersteuning</span>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>
